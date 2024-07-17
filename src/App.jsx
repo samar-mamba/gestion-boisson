@@ -80,7 +80,9 @@ function App() {
   return (
     <section className="yl-10 px-6  lg:px-8">
       <div className='border-b-2 border-white-500  p-2 shadow-md'>
-        <button className='rounded bg-orange-500 w-32 p-2  '>Admin</button>
+        <button className='rounded  bg-cyan-500 w-32 p-2 hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 '>
+          
+          Admin</button>
 
       </div>
 
@@ -168,9 +170,14 @@ function App() {
               </div>
 
             </form>
+            
           </div>
         </div>
       </div>
+      <p class="text-center text-gray-500 text-lg">
+    &copy;2024 MadilaTech  mambasamar@gmail.com. All rights reserved.
+  </p>
+
     </section>
   );
 }
