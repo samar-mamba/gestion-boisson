@@ -1,6 +1,7 @@
 
 import axios from "axios";
 import { useState, useEffect} from "react";
+import Datacommande from "./Data/data.json"
 
 
 
@@ -22,19 +23,19 @@ function Admin(){
 
   // getCommande();
 //  approche differente d'appel de données
-const [commande, setCommande]= useState([]);
-    useEffect(() => {
-        axios.get("src/Data/data.json")
-        .then(response => {
-           setCommande(response.data)
-        })
-        .catch(error => {
-           console.error("Erreur lors de la récupération des house:" ,error)
-        });
-}, [])
+// const [commande, setCommande]= useState([]);
+//     useEffect(() => {
+//         axios.get("src/Data/data.json")
+//         .then(response => {
+//            setCommande(response.data)
+//         })
+//         .catch(error => {
+//            console.error("Erreur lors de la récupération des house:" ,error)
+//         });
+// }, [])
 
     
-
+const commande = Datacommande
     return(
 
       
