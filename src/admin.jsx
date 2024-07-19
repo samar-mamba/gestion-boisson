@@ -7,21 +7,31 @@ import { useState, useEffect} from "react";
 
 function Admin(){
 
-  const [commande, setCommande] = useState([]);
+  // const [commande, setCommande] = useState([]);
 
-  async function getCommande () {
-    try {
-      const response = await axios.get("src/Data/data.json");
-      console.log(response.data);
-      setCommande(response.data);
-      return response
-    } catch (error) {
-      return error
-    }
-  }
+  // async function getCommande () {
+  //   try {
+  //     const response = await axios.get("src/Data/data.json");
+  //     console.log(response.data);
+  //     setCommande(response.data);
+  //     return response
+  //   } catch (error) {
+  //     return error
+  //   }
+  // }
 
-  getCommande();
-
+  // getCommande();
+//  approche differente d'appel de données
+const [commande, setCommande]= useState([]);
+    useEffect(() => {
+        axios.get("src/Data/data.json")
+        .then(response => {
+           setCommande(response.data)
+        })
+        .catch(error => {
+           console.error("Erreur lors de la récupération des house:" ,error)
+        });
+}, [])
 
     
 

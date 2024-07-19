@@ -18,6 +18,20 @@
             "boisson":"fanta",
             "table":"windows",
             "statut":"en cours"
+        },
+        {
+            "id":2,
+            "nom":"Kevin",
+            "boisson":"Nkoyi",
+            "table":"windows",
+            "statut":"en cours"
+        },
+        {
+            "id":3,
+            "nom":"Herve",
+            "boisson":"vin rouge",
+            "table":"linux",
+            "statut":"en cours"
         }
 
     ],
