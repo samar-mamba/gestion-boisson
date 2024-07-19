@@ -1,29 +1,33 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, NavLink, useNavigate } from "react-router-dom"
+import datacommande from "../src/Data/data.json"
 
 function App() {
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
+  const boissons = datacommande.boisson
+  const tables = datacommande.table
+
 
   // tableau  boisson et table
 
-  const boissons = [
-    { id: 1, nom: 'Bouteille deau' },
-    { id: 2, nom: 'Fanta' },
-    { id: 3, nom: 'Sprite' },
-    { id: 4, nom: 'Vin rouge' },
+  // const boissons = [
+  //   { id: 1, nom: 'Bouteille deau' },
+  //   { id: 2, nom: 'Fanta' },
+  //   { id: 3, nom: 'Sprite' },
+  //   { id: 4, nom: 'Vin rouge' },
 
-  ];
+  // ];
 
-  const tables = [
-    { id: 1, nom: 'windows' },
-    { id: 2, nom: 'virus' },
-    { id: 3, nom: 'python' },
-    { id: 4, nom: 'bcrypt' },
+  // const tables = [
+  //   { id: 1, nom: 'windows' },
+  //   { id: 2, nom: 'virus' },
+  //   { id: 3, nom: 'python' },
+  //   { id: 4, nom: 'bcrypt' },
 
-  ];
+  // ];
 
 
   const [boissonSelectionnee, setBoissonSelectionnee] = useState(null);
@@ -113,6 +117,7 @@ function App() {
                     onChange={handleNomChange}
                     id="nom"
                     name="ville"
+                    placeholder="Nom complet"
                     type="text"
                     autoComplete="nom"
                     required
@@ -175,7 +180,7 @@ function App() {
           </div>
         </div>
       </div>
-      <p class="text-center text-gray-500 text-lg">
+      <p class="text-center text-gray-500 text-lg m-8">
     &copy;2024 MadilaTech  mambasamar@gmail.com. All rights reserved.
   </p>
 

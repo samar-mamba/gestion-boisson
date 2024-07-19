@@ -1,39 +1,69 @@
-import React from "react";
+
+import axios from "axios";
+import { useState, useEffect} from "react";
 
 
-function Admin() {
 
 
-    return (
-        
-        <div class="w-full max-w-xs container h-full yl-10 px-6  lg:px-8">
-  <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-        Username
-      </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username"/>
-    </div>
-    <div class="mb-6">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-        Password
-      </label>
-      <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************"/>
-      <p class="text-red-500 text-xs italic">Please choose a password.</p>
-    </div>
-    <div class="flex items-center justify-between">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-        Commander
-      </button>
-    </div>
-  </form>
-  <p class="text-center text-gray-500 text-xs">
-    &copy;2024 Madila's tech.mambasamar@gmail.com. All rights reserved.
-  </p>
-</div>
+function Admin(){
 
-    );
+  const [commande, setCommande] = useState([]);
+
+  async function getCommande () {
+    try {
+      const response = await axios.get("src/Data/data.json");
+      console.log(response.data);
+      setCommande(response.data);
+      return response
+    } catch (error) {
+      return error
+    }
+  }
+
+  getCommande();
+
+
     
+
+    return(
+
+      
+<div className="pt-5 pb-20 lg:px-8 ">
+
+  <h2 className=" mb-10 bg-sky-500 text-center text-white pb-10  text-2xl font-semibold leading-9 tracking-tight ">
+  Commandes de boissons
+  </h2>
+
+      <table className="border-separate border-spacing-2 border border-slate-400 ...">
+      
+      <thead>
+        <tr>
+          <th className="border border-slate-300 ...">id</th>
+          <th className="border border-slate-300 ...">Nom </th>
+          <th className="border border-slate-300 ...">Boissons </th>
+          <th className="border border-slate-300 ...">Table</th>
+          <th className="border border-slate-300 ...">Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+      
+      {commande.commande && commande.commande.map(commande=>(
+        <tr key={commande.id}>
+              <td className="border border-slate-300 ..." >{commande.id} </td>
+              <td className="border border-slate-300 ...">{commande.nom} </td>
+              <td className="border border-slate-300 ...">{commande.boisson} </td>
+              <td className="border border-slate-300 ...">{commande.table} </td>
+              <td className="border border-slate-300 ...">{commande.statut} </td>
+               </tr>
+
+               ))
+            }
+            
+      </tbody>
+    </table>
+        </div>
+
+    )
 }
 
 export default Admin;

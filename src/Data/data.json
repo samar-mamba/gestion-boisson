@@ -1,0 +1,35 @@
+{
+    "boisson": [
+        
+    { "id": 1,
+     "nom": "Bouteille deau"},
+    { "id": 2,
+     "nom": "Fanta" },
+    { "id": 3,
+     "nom": "Sprite" },
+    { "id": 4, 
+    "nom": "Vin rouge" }
+],
+    "commande":
+    [
+        {
+            "id":1,
+            "nom":"samar",
+            "boisson":"fanta",
+            "table":"windows",
+            "statut":"en cours"
+        }
+
+    ],
+    "table": [
+        { "id": 1,
+     "nom": "windows"
+    },
+    { "id": 2,
+     "nom": "virus" },
+    { "id": 3,
+     "nom": "bcrypt" },
+    { "id": 4, 
+    "nom": "linux" }
+    ]
+}
