@@ -84,7 +84,7 @@ function App() {
   return (
     <section className="yl-10 px-6  lg:px-8">
       <div className='border-b-2 border-white-500  p-2 shadow-md'>
-        <NavLink to="/admin"> 
+        <NavLink to="/login"> 
         <button className='rounded  bg-cyan-500 w-32 p-2 hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 '>
           
           Admin</button></NavLink>
