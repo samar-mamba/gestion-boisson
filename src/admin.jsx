@@ -6,14 +6,16 @@ import Datacommande from "./Data/data.json"
 
 
 
+
+
 function Admin(){
 
   // const [commande, setCommande] = useState([]);
 
   // async function getCommande () {
   //   try {
-  //     const response = await axios.get("src/Data/data.json");
-  //     console.log(response.data);
+  //     const response = await axios.get("http://localhost:3000/api/com");
+  //     // console.log(response.data);
   //     setCommande(response.data);
   //     return response
   //   } catch (error) {
@@ -22,20 +24,24 @@ function Admin(){
   // }
 
   // getCommande();
-//  approche differente d'appel de données
-// const [commande, setCommande]= useState([]);
-//     useEffect(() => {
-//         axios.get("src/Data/data.json")
-//         .then(response => {
-//            setCommande(response.data)
-//         })
-//         .catch(error => {
-//            console.error("Erreur lors de la récupération des house:" ,error)
-//         });
-// }, [])
 
-    
-const commande = Datacommande
+//  approche differente d'appel de données:src/Data/data.json
+
+const [commande, setCommande]= useState([]);
+    useEffect(() => {
+        axios.get("https://apigestionboisson.onrender.com/api/com")
+        .then(response => {
+           setCommande(response.data)
+        })
+        .catch(error => {
+           console.error("Erreur lors de la récupération des house:" ,error)
+        });
+}, [])
+
+  
+
+
+
     return(
 
       
@@ -49,22 +55,29 @@ const commande = Datacommande
       
       <thead>
         <tr>
-          <th className="border border-slate-300 ...">id</th>
+          {/* <th className="border border-slate-300 ...">id</th> */}
           <th className="border border-slate-300 ...">Nom </th>
           <th className="border border-slate-300 ...">Boissons </th>
           <th className="border border-slate-300 ...">Table</th>
-          <th className="border border-slate-300 ...">Statut</th>
+          <th className="border border-slate-300 ..." >
+            Statut</th>
         </tr>
       </thead>
       <tbody>
       
-      {commande.commande && commande.commande.map(commande=>(
-        <tr key={commande.id}>
-              <td className="border border-slate-300 ..." >{commande.id} </td>
+      {commande && commande.map(commande =>(
+        <tr key={commande._id}
+        
+        >
+              {/* <td className="border border-slate-300 ..." >{commande._id} </td> */}
               <td className="border border-slate-300 ...">{commande.nom} </td>
-              <td className="border border-slate-300 ...">{commande.boisson} </td>
-              <td className="border border-slate-300 ...">{commande.table} </td>
-              <td className="border border-slate-300 ...">{commande.statut} </td>
+              <td className="border border-slate-300 ...">{commande.boissonNom} </td>
+              <td className="border border-slate-300 ...">{commande.tableNom} </td>
+              <td className="border border-slate-300 ..." 
+               >
+          
+                
+                 </td>
                </tr>
 
                ))

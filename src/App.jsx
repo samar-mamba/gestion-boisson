@@ -5,7 +5,7 @@ import datacommande from "../src/Data/data.json"
 
 function App() {
 
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState("");
 
   const boissons = datacommande.boisson
   const tables = datacommande.table
@@ -46,18 +46,59 @@ function App() {
     setTableSelectionnee(parseInt(event.target.value, 10));
   };
 
+   // Fonction pour obtenir le nom d'une boisson ou d'une table à partir de son ID
+   const getNomById = (id, type) => {
+    const list = type === 'boisson' ? boissons : tables;
+    const item = list.find((item) => item.id === parseInt(id, 10));
+    return item ? item.nom : '';
+  };
+
   // fonction envoi de données
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    
     if (boissonSelectionnee && nom && tableSelectionnee) {
       
-      alert(`Commande envoyée : ${nom} - Table ${tableSelectionnee} - Boisson ${boissonSelectionnee}`);
-      setFormSubmitted(true);
-      // Envoyer la commande au serveur ici
+      const boissonNom = getNomById(boissonSelectionnee, 'boisson');
+      const tableNom = getNomById(tableSelectionnee, 'table');
+
+      // console.log(boissonNom);
+      // console.log(tableNom);
+
+      try {
+        const response = await axios.post("https://apigestionboisson.onrender.com/api/com", {
+          nom,
+          boissonNom,
+          tableNom,
+        });
+        if (response.status === 201) {
+          setFormSubmitted(true);
+          // alert(`Commande envoyée avec succès !`);
+        } else {
+          console.error("Erreur lors de l'envoi de la commande");
+        }
+      } catch (error) {
+        console.error("Erreur d'envoi de la commande :", error);
+        alert("Une erreur est survenue. Veuillez réessayer plus tard.");
+      }
     } else {
-      alert('Veuillez sélectionner une boisson, un nom et une table.');
+      alert("Veuillez sélectionner une boisson, un nom et une table.");
     }
   };
+
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   if (boissonSelectionnee && nom && tableSelectionnee) {
+      
+  //     alert(`Commande envoyée : ${nom} - Table ${tableSelectionnee} - Boisson ${boissonSelectionnee}`);
+  //     setFormSubmitted(true);
+  //     // Envoyer la commande au serveur ici
+  //   } else {
+  //     alert('Veuillez sélectionner une boisson, un nom et une table.');
+  //   }
+  // };
+
 
   // const handleLogin = async (e) => {
   //   e.preventDefault();
@@ -116,12 +157,12 @@ function App() {
                     value={formSubmitted ? "" : nom}
                     onChange={handleNomChange}
                     id="nom"
-                    name="ville"
+                    name="nom"
                     placeholder="Nom complet"
                     type="text"
                     autoComplete="nom"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -133,11 +174,11 @@ function App() {
                   </label>
                 </div>
                 <div className="mt-2">
-                  <select className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  <select className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     name="categorie" id="choix" value={formSubmitted ? "" : boissonSelectionnee} onChange={handleBoissonChange} >
                     <option value="">Sélectionner une boisson</option>
                     {boissons.map((boisson) => (
-                      <option key={boisson.id} value={boisson.id}>
+                       <option key = {boisson.id} value={boisson.id}>
                         {boisson.nom}
                       </option>
                     ))}
@@ -153,7 +194,7 @@ function App() {
                   </label>
                 </div>
                 <div className="mt-2">
-                  <select className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  <select className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     name="categorie" id="choix" value={formSubmitted ? "" : tableSelectionnee} onChange={handleTableChange}>
                     <option value="">Sélectionner une table</option>
                     {tables.map((table) => (

@@ -32,6 +32,13 @@
             "boisson":"vin rouge",
             "table":"linux",
             "statut":"en cours"
+        },
+        {
+            "id":4,
+            "nom":"Ngele",
+            "boisson":"fanta",
+            "table":"bcrypt",
+            "statut":"en cours"
         }
 
     ],
