@@ -1,38 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, NavLink, useNavigate } from "react-router-dom"
-import datacommande from "../src/Data/data.json"
+import { NavLink } from "react-router-dom";
+import datacommande from "../src/Data/data.json";
 
 function App() {
-
-  const [formSubmitted, setFormSubmitted] = useState("");
-
-  const boissons = datacommande.boisson
-  const tables = datacommande.table
-
-
-  // tableau  boisson et table
-
-  // const boissons = [
-  //   { id: 1, nom: 'Bouteille deau' },
-  //   { id: 2, nom: 'Fanta' },
-  //   { id: 3, nom: 'Sprite' },
-  //   { id: 4, nom: 'Vin rouge' },
-
-  // ];
-
-  // const tables = [
-  //   { id: 1, nom: 'windows' },
-  //   { id: 2, nom: 'virus' },
-  //   { id: 3, nom: 'python' },
-  //   { id: 4, nom: 'bcrypt' },
-
-  // ];
-
+  const boissons = datacommande.boisson;
+  const tables = datacommande.table;
 
   const [boissonSelectionnee, setBoissonSelectionnee] = useState(null);
   const [nom, setNom] = useState('');
   const [tableSelectionnee, setTableSelectionnee] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleBoissonChange = (event) => {
     setBoissonSelectionnee(parseInt(event.target.value, 10));
@@ -46,14 +24,12 @@ function App() {
     setTableSelectionnee(parseInt(event.target.value, 10));
   };
 
-   // Fonction pour obtenir le nom d'une boisson ou d'une table à partir de son ID
-   const getNomById = (id, type) => {
+  const getNomById = (id, type) => {
     const list = type === 'boisson' ? boissons : tables;
     const item = list.find((item) => item.id === parseInt(id, 10));
     return item ? item.nom : '';
   };
 
-  // fonction envoi de données
   const handleSubmit = async (event) => {
     event.preventDefault();
     
@@ -62,18 +38,18 @@ function App() {
       const boissonNom = getNomById(boissonSelectionnee, 'boisson');
       const tableNom = getNomById(tableSelectionnee, 'table');
 
-      // console.log(boissonNom);
-      // console.log(tableNom);
-
       try {
         const response = await axios.post("https://apigestionboisson.onrender.com/api/com", {
           nom,
           boissonNom,
           tableNom,
+          status: false,
         });
         if (response.status === 201) {
-          setFormSubmitted(true);
-          // alert(`Commande envoyée avec succès !`);
+          setNom('');
+          setBoissonSelectionnee(null);
+          setTableSelectionnee(null);
+          setShowPopup(true); // Afficher la pop-up
         } else {
           console.error("Erreur lors de l'envoi de la commande");
         }
@@ -86,57 +62,25 @@ function App() {
     }
   };
 
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   if (boissonSelectionnee && nom && tableSelectionnee) {
-      
-  //     alert(`Commande envoyée : ${nom} - Table ${tableSelectionnee} - Boisson ${boissonSelectionnee}`);
-  //     setFormSubmitted(true);
-  //     // Envoyer la commande au serveur ici
-  //   } else {
-  //     alert('Veuillez sélectionner une boisson, un nom et une table.');
-  //   }
-  // };
-
-
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post( {
-  //       email,
-  //       password,
-  //     });
-  //     if (response.data.token) {
-  //       // Connexion réussie, rediriger vers la page d'accueil avec un message
-  //       alert('Connexion réussie');
-
-
-  //     } else {
-  //       setError('Erreur lors de la connexion');
-  //     }
-  //   } catch (error) {
-  //     console.error('Erreur lors de la connexion :', error);
-  //     setError('Erreur lors de la connexion');
-  //   }
-  // };
-
+  const handleClosePopup = () => {
+    setShowPopup(false); // Fermer la pop-up
+  };
 
   return (
     <section className="yl-10 px-6  lg:px-8">
       <div className='border-b-2 border-white-500  p-2 shadow-md'>
         <NavLink to="/login"> 
-        <button className='rounded  bg-cyan-500 w-32 p-2 hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 '>
-          
-          Admin</button></NavLink>
-
+          <button className='rounded  bg-cyan-500 w-32 p-2 hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 '>
+            Admin
+          </button>
+        </NavLink>
       </div>
 
-      <div className="container h-full ">
-        <div className="g-6 flex  h-full flex-wrap  justify-center lg:justify-between">
-          <div className="mb-12 md:mb-0  md:w-8/12 lg:w-6/12 ">
+      <div className="container h-full">
+        <div className="g-6 flex h-full flex-wrap justify-center lg:justify-between">
+          <div className="mb-12 md:mb-0 md:w-8/12 lg:w-6/12">
             <img
-              src="https://res.cloudinary.com/dcgjop9dg/image/upload/v1721209418/fleur_fkrgdd.jpg"
+              src="https://res.cloudinary.com/dcgjop9dg/image/upload/v1723682072/photo_2024-08-15_01-30-32_lon0s1.jpg"
               className="w-full rounded"
               alt="Phone image"
             />
@@ -146,19 +90,18 @@ function App() {
               <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                 Dites nous votre gout ?
               </h2>
-              {/* {error && <p className="text-red-500 mb-4 sm-5">{error}</p>} */}
 
               <div>
                 <label htmlFor="nom" className="block text-sm font-medium leading-6 text-gray-900">
-                  Nom
+                  Prénom et Nom
                 </label>
                 <div className="mt-2">
                   <input
-                    value={formSubmitted ? "" : nom}
+                    value={nom}
                     onChange={handleNomChange}
                     id="nom"
                     name="nom"
-                    placeholder="Nom complet"
+                    placeholder="Prenom et Nom"
                     type="text"
                     autoComplete="nom"
                     required
@@ -175,16 +118,15 @@ function App() {
                 </div>
                 <div className="mt-2">
                   <select className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    name="categorie" id="choix" value={formSubmitted ? "" : boissonSelectionnee} onChange={handleBoissonChange} >
+                    name="categorie" id="choix" value={boissonSelectionnee || ''} onChange={handleBoissonChange}>
                     <option value="">Sélectionner une boisson</option>
                     {boissons.map((boisson) => (
-                       <option key = {boisson.id} value={boisson.id}>
+                      <option key={boisson.id} value={boisson.id}>
                         {boisson.nom}
                       </option>
                     ))}
                   </select>
                 </div>
-
               </div>
 
               <div>
@@ -195,7 +137,7 @@ function App() {
                 </div>
                 <div className="mt-2">
                   <select className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    name="categorie" id="choix" value={formSubmitted ? "" : tableSelectionnee} onChange={handleTableChange}>
+                    name="categorie" id="choix" value={tableSelectionnee || ''} onChange={handleTableChange}>
                     <option value="">Sélectionner une table</option>
                     {tables.map((table) => (
                       <option key={table.id} value={table.id}>
@@ -204,7 +146,6 @@ function App() {
                     ))}
                   </select>
                 </div>
-
               </div>
 
               <div>
@@ -215,24 +156,31 @@ function App() {
                   Commander
                 </button>
               </div>
-
             </form>
-            
           </div>
         </div>
       </div>
-      <p class="text-center text-gray-500 text-lg m-8">
-    &copy;2024 MadilaTech  mambasamar@gmail.com. All rights reserved.
-  </p>
 
+      {showPopup && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-bold mb-4">Commande réussie !</h2>
+            <p>Votre commande a été envoyée avec succès.</p>
+            <button
+              className="mt-4 rounded bg-cyan-500 px-4 py-2 text-white hover:bg-cyan-600"
+              onClick={handleClosePopup}
+            >
+              Fermer
+            </button>
+          </div>
+        </div>
+      )}
+
+      <p className="text-center text-gray-500 text-lg m-8">
+        &copy;2024 MadilaTech mambasamar@gmail.com. All rights reserved.
+      </p>
     </section>
   );
 }
-
-
-
-
-
-
 
 export default App;

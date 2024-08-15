@@ -8,54 +8,31 @@ import axios from "axios";
   const [password,setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
-
-  // async function handleLogin(e) {
-  //   e.preventDefault();
-  //   try {
-  //     await axios.post('http://localhost:3000/api/auth/login', {
-  //       email,
-  //       password,
-  //     });
-  //     alert(`Inscription réussi. Vous pouvez maintenant vous connecter.
-  //     Cliquer sur bouton OK pour vous connecter`);
-  //     navigate('/admin')
-  //   } catch (e) {
-  //     // alert(`votre enregistrement à échouer. Veuillez réessayer plus tard`);
-
-  //     if (error.response) {
-  //       alert(error.response.data.error || 'Error creating user');
-  //     } else {
-  //       alert('Error creating user');
-  //     }
-  //   }
-  // }
+  
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // navigate('/admin')
     
-
-  try {
-    const response = await axios.post('https://apigestionboisson.onrender.com/api/auth/signin', {
-      email,
-      password,
-    });
-    console.log(response.data);
-    if (response.data) {
-      // Connexion réussie, rediriger vers la page d'accueil avec un message
-      alert('Connexion réussie');
-      navigate('/admin')
-      
-     
-    } else {
-      setError('Email ou mot de passe incorrecte',error);
+    try {
+        const response = await axios.post('https://apigestionboisson.onrender.com/api/auth/signin', {
+            email,
+            password,
+        });
+        
+        if (response.data && response.data.token) {
+            // Stocker le token dans le localStorage
+            localStorage.setItem('token', response.data.token);
+            alert('Connexion réussie');
+            navigate('/admin');
+        } else {
+            setError('Email ou mot de passe incorrect');
+        }
+    } catch (error) {
+        console.error('Erreur lors de la connexion :', error);
+        setError('Email ou mot de passe incorrect');
     }
-  } catch (error) {
-    console.error('Erreur lors de la connexion :', error);
-    setError('Email ou mot de passe incorrecte');
-  }
 };
+
 
 
     return (
