@@ -76,7 +76,7 @@ function App() {
       <div className='border-b-2 border-gray-300 p-2 shadow-md mb-10'>
         <NavLink to="/login"> 
           <button className='rounded bg-gradient-to-r from-cyan-500 to-blue-600 w-32 p-2 hover:from-cyan-600 hover:to-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
-            Admin
+            Se Connecter
           </button>
         </NavLink>
       </div>
@@ -87,7 +87,7 @@ function App() {
             <img
               src="https://res.cloudinary.com/dcgjop9dg/image/upload/v1723682072/photo_2024-08-15_01-30-32_lon0s1.jpg"
               className="w-full rounded-lg shadow-lg"
-              alt="Phone image"
+              alt="Image téléphone"
             />
           </div>
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -95,6 +95,10 @@ function App() {
               <h2 className="text-center text-3xl font-extrabold text-gray-900">
                 Dites-nous votre goût !
               </h2>
+
+              <p className="text-center text-gray-600 mb-4">
+                Remplissez le formulaire ci-dessous pour nous indiquer ce que vous souhaitez boire aujourd'hui. Nous nous occupons du reste !
+              </p>
 
               <div>
                 <label htmlFor="nom" className="block text-sm font-medium text-gray-700">
@@ -106,18 +110,19 @@ function App() {
                     onChange={handleNomChange}
                     id="nom"
                     name="nom"
-                    placeholder="Prénom et Nom"
+                    placeholder="Entrez votre prénom et nom"
                     type="text"
                     autoComplete="nom"
                     required
                     className="p-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
+                <p className="text-gray-500 text-sm mt-1">Ce champ est obligatoire.</p>
               </div>
 
               <div>
                 <label htmlFor="choix-boisson" className="block text-sm font-medium text-gray-700">
-                  Voulez-vous boire:
+                  Choisissez votre boisson :
                 </label>
                 <div className="mt-2">
                   <select
@@ -135,11 +140,12 @@ function App() {
                     ))}
                   </select>
                 </div>
+                <p className="text-gray-500 text-sm mt-1">Sélectionnez votre boisson préférée parmi nos options.</p>
               </div>
 
               <div>
                 <label htmlFor="choix-table" className="block text-sm font-medium text-gray-700">
-                  Votre table:
+                  Choisissez votre table :
                 </label>
                 <div className="mt-2">
                   <select
@@ -157,6 +163,7 @@ function App() {
                     ))}
                   </select>
                 </div>
+                <p className="text-gray-500 text-sm mt-1">Veuillez choisir votre table pour que nous sachions où vous apporter votre commande.</p>
               </div>
 
               <div>
@@ -164,7 +171,7 @@ function App() {
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-gradient-to-r from-cyan-500 to-blue-600 px-3 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm hover:from-cyan-600 hover:to-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  Commander
+                  Passer la commande
                 </button>
               </div>
             </form>
@@ -185,7 +192,7 @@ function App() {
         <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
             <h2 className="text-2xl font-bold text-center text-gray-900 mb-4">Commande réussie !</h2>
-            <p className="text-center text-gray-600">Votre commande a été envoyée avec succès.</p>
+            <p className="text-center text-gray-600">Votre commande a été envoyée avec succès. Nous vous apporterons votre boisson à la table que vous avez choisie dans les plus brefs délais.</p>
             <div className="mt-6 flex justify-center">
               <button
                 className="rounded-md bg-cyan-500 px-4 py-2 text-white hover:bg-cyan-600 transition duration-300"
@@ -199,7 +206,7 @@ function App() {
       )}
 
       <footer className="text-center text-gray-500 text-lg mt-12">
-        &copy;2024 MadilaTech mambasamar@gmail.com. Tous droits réservés.
+        &copy; &copy;2024 MadilaTech mambasamar@gmail.com. Tous droits réservés.
       </footer>
     </section>
   );
