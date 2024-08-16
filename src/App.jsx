@@ -11,6 +11,7 @@ function App() {
   const [nom, setNom] = useState('');
   const [tableSelectionnee, setTableSelectionnee] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // État pour gérer le loader
 
   const handleBoissonChange = (event) => {
     setBoissonSelectionnee(parseInt(event.target.value, 10));
@@ -32,8 +33,9 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     if (boissonSelectionnee && nom && tableSelectionnee) {
+      setIsLoading(true); // Afficher le loader
       
       const boissonNom = getNomById(boissonSelectionnee, 'boisson');
       const tableNom = getNomById(tableSelectionnee, 'table');
@@ -45,6 +47,7 @@ function App() {
           tableNom,
           status: false,
         });
+
         if (response.status === 201) {
           setNom('');
           setBoissonSelectionnee(null);
@@ -56,6 +59,8 @@ function App() {
       } catch (error) {
         console.error("Erreur d'envoi de la commande :", error);
         alert("Une erreur est survenue. Veuillez réessayer plus tard.");
+      } finally {
+        setIsLoading(false); // Masquer le loader une fois la commande envoyée
       }
     } else {
       alert("Veuillez sélectionner une boisson, un nom et une table.");
@@ -67,32 +72,32 @@ function App() {
   };
 
   return (
-    <section className="yl-10 px-6  lg:px-8">
-      <div className='border-b-2 border-white-500  p-2 shadow-md'>
+    <section className="py-10 px-6 lg:px-8 bg-gray-50 min-h-screen">
+      <div className='border-b-2 border-gray-300 p-2 shadow-md mb-10'>
         <NavLink to="/login"> 
-          <button className='rounded  bg-cyan-500 w-32 p-2 hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 '>
+          <button className='rounded bg-gradient-to-r from-cyan-500 to-blue-600 w-32 p-2 hover:from-cyan-600 hover:to-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
             Admin
           </button>
         </NavLink>
       </div>
 
-      <div className="container h-full">
-        <div className="g-6 flex h-full flex-wrap justify-center lg:justify-between">
+      <div className="container mx-auto">
+        <div className="flex flex-wrap justify-center lg:justify-between items-center">
           <div className="mb-12 md:mb-0 md:w-8/12 lg:w-6/12">
             <img
               src="https://res.cloudinary.com/dcgjop9dg/image/upload/v1723682072/photo_2024-08-15_01-30-32_lon0s1.jpg"
-              className="w-full rounded"
+              className="w-full rounded-lg shadow-lg"
               alt="Phone image"
             />
           </div>
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                Dites nous votre gout ?
+            <form className="space-y-6 bg-white p-8 rounded-lg shadow-lg" onSubmit={handleSubmit}>
+              <h2 className="text-center text-3xl font-extrabold text-gray-900">
+                Dites-nous votre goût !
               </h2>
 
               <div>
-                <label htmlFor="nom" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="nom" className="block text-sm font-medium text-gray-700">
                   Prénom et Nom
                 </label>
                 <div className="mt-2">
@@ -101,24 +106,27 @@ function App() {
                     onChange={handleNomChange}
                     id="nom"
                     name="nom"
-                    placeholder="Prenom et Nom"
+                    placeholder="Prénom et Nom"
                     type="text"
                     autoComplete="nom"
                     required
-                    className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="p-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
 
               <div>
-                <div className="flex items-center justify-between">
-                  <label htmlFor="choix" className="block text-sm font-medium leading-6 text-gray-900">
-                    Voulez-vous boire:
-                  </label>
-                </div>
+                <label htmlFor="choix-boisson" className="block text-sm font-medium text-gray-700">
+                  Voulez-vous boire:
+                </label>
                 <div className="mt-2">
-                  <select className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    name="categorie" id="choix" value={boissonSelectionnee || ''} onChange={handleBoissonChange}>
+                  <select
+                    id="choix-boisson"
+                    name="boisson"
+                    value={boissonSelectionnee || ''}
+                    onChange={handleBoissonChange}
+                    className="p-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  >
                     <option value="">Sélectionner une boisson</option>
                     {boissons.map((boisson) => (
                       <option key={boisson.id} value={boisson.id}>
@@ -130,14 +138,17 @@ function App() {
               </div>
 
               <div>
-                <div className="flex items-center justify-between">
-                  <label htmlFor="choix" className="block text-sm font-medium leading-6 text-gray-900">
-                    votre table:
-                  </label>
-                </div>
+                <label htmlFor="choix-table" className="block text-sm font-medium text-gray-700">
+                  Votre table:
+                </label>
                 <div className="mt-2">
-                  <select className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    name="categorie" id="choix" value={tableSelectionnee || ''} onChange={handleTableChange}>
+                  <select
+                    id="choix-table"
+                    name="table"
+                    value={tableSelectionnee || ''}
+                    onChange={handleTableChange}
+                    className="p-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  >
                     <option value="">Sélectionner une table</option>
                     {tables.map((table) => (
                       <option key={table.id} value={table.id}>
@@ -151,7 +162,7 @@ function App() {
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-cyan-500 px-3 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-cyan-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="flex w-full justify-center rounded-md bg-gradient-to-r from-cyan-500 to-blue-600 px-3 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm hover:from-cyan-600 hover:to-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Commander
                 </button>
@@ -161,24 +172,35 @@ function App() {
         </div>
       </div>
 
-      {showPopup && (
+      {isLoading && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">Commande réussie !</h2>
-            <p>Votre commande a été envoyée avec succès.</p>
-            <button
-              className="mt-4 rounded bg-cyan-500 px-4 py-2 text-white hover:bg-cyan-600"
-              onClick={handleClosePopup}
-            >
-              Fermer
-            </button>
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 border-4 border-t-4 border-gray-200 rounded-full animate-spin"></div>
+            <span className="text-white text-xl">Envoi en cours...</span>
           </div>
         </div>
       )}
 
-      <p className="text-center text-gray-500 text-lg m-8">
-        &copy;2024 MadilaTech mambasamar@gmail.com. All rights reserved.
-      </p>
+      {showPopup && !isLoading && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <h2 className="text-2xl font-bold text-center text-gray-900 mb-4">Commande réussie !</h2>
+            <p className="text-center text-gray-600">Votre commande a été envoyée avec succès.</p>
+            <div className="mt-6 flex justify-center">
+              <button
+                className="rounded-md bg-cyan-500 px-4 py-2 text-white hover:bg-cyan-600 transition duration-300"
+                onClick={handleClosePopup}
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <footer className="text-center text-gray-500 text-lg mt-12">
+        &copy;2024 MadilaTech mambasamar@gmail.com. Tous droits réservés.
+      </footer>
     </section>
   );
 }
