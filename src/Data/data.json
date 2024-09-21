@@ -8,40 +8,33 @@
     { "id": 3,
      "nom": "Sprite" },
     { "id": 4, 
-    "nom": "Vin rouge" }
+    "nom": "Coca" },
+    {
+    "id":5,
+    "nom":"Coca Zero" },
+     {
+    "id":6,
+    "nom":"Jus d'orange" },
+    {
+    "id":7,
+    "nom":"Heineken" },
+    {
+    "id":8,
+    "nom":"Leffe (blonde)" },
+    {
+    "id":9,
+    "nom":"Desperados" },
+    {
+    "id":10,
+    "nom":"Panaché" },
+    {
+    "id":11,
+    "nom":"Vin rouge" },
+    {
+    "id":12,
+    "nom":"Vin Blanc" }
 ],
-    "commande":
-    [
-        {
-            "id":1,
-            "nom":"samar",
-            "boisson":"fanta",
-            "table":"windows",
-            "statut":"en cours"
-        },
-        {
-            "id":2,
-            "nom":"Kevin",
-            "boisson":"Nkoyi",
-            "table":"windows",
-            "statut":"en cours"
-        },
-        {
-            "id":3,
-            "nom":"Herve",
-            "boisson":"vin rouge",
-            "table":"linux",
-            "statut":"en cours"
-        },
-        {
-            "id":4,
-            "nom":"Ngele",
-            "boisson":"fanta",
-            "table":"bcrypt",
-            "statut":"en cours"
-        }
-
-    ],
+    
     "table": [
         { "id": 1,
      "nom": "Abondance"
