@@ -44,13 +44,24 @@
     ],
     "table": [
         { "id": 1,
-     "nom": "windows"
+     "nom": "Abondance"
     },
     { "id": 2,
-     "nom": "virus" },
+     "nom": "Equilibre" },
     { "id": 3,
-     "nom": "bcrypt" },
+     "nom": "Générosité" },
     { "id": 4, 
-    "nom": "linux" }
+    "nom": "Gratitude" },
+    { "id": 5, 
+    "nom": "Harmonie"},
+    { "id": 6, 
+    "nom": "Joie"},
+    { "id": 7, 
+    "nom": "Liberté"},
+    { "id": 8, 
+    "nom": "Passion"},
+    { "id": 9, 
+    "nom": "Solidarité"},
+    
     ]
 }
