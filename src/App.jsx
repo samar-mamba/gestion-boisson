@@ -97,7 +97,7 @@ function App() {
               </h2>
 
               <p className="text-center text-gray-600 mb-4">
-                Remplissez le formulaire ci-dessous pour nous indiquer ce que vous souhaitez boire aujourd'hui. Nous nous occupons du reste !
+                Veuillez remplir le formulaire ci-dessous pour  indiquer votre choix de boisson. Nous nous occupons du reste !
               </p>
 
               <div>
@@ -132,7 +132,7 @@ function App() {
                     onChange={handleBoissonChange}
                     className="p-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   >
-                    <option value="">Sélectionner une boisson</option>
+                    <option value="">Sélectionnez une boisson</option>
                     {boissons.map((boisson) => (
                       <option key={boisson.id} value={boisson.id}>
                         {boisson.nom}
@@ -155,7 +155,7 @@ function App() {
                     onChange={handleTableChange}
                     className="p-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   >
-                    <option value="">Sélectionner une table</option>
+                    <option value="">Sélectionnez une table</option>
                     {tables.map((table) => (
                       <option key={table.id} value={table.id}>
                         {table.nom}
@@ -171,7 +171,7 @@ function App() {
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-gradient-to-r from-cyan-500 to-blue-600 px-3 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm hover:from-cyan-600 hover:to-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  Passer la commande
+                  Passez la commande
                 </button>
               </div>
             </form>
@@ -192,7 +192,7 @@ function App() {
         <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
             <h2 className="text-2xl font-bold text-center text-gray-900 mb-4">Commande réussie !</h2>
-            <p className="text-center text-gray-600">Votre commande a été envoyée avec succès. Nous vous apporterons votre boisson à la table que vous avez choisie dans les plus brefs délais.</p>
+            <p className="text-center text-gray-600">Votre commande a été envoyée avec succès. Nous vous apportons votre boisson :).</p>
             <div className="mt-6 flex justify-center">
               <button
                 className="rounded-md bg-cyan-500 px-4 py-2 text-white hover:bg-cyan-600 transition duration-300"
@@ -206,7 +206,7 @@ function App() {
       )}
 
       <footer className="text-center text-gray-500 text-lg mt-12">
-        &copy; &copy;2024 MadilaTech mambasamar@gmail.com. Tous droits réservés.
+        &copy;2024 MadilaTech mambasamar@gmail.com. Tous droits réservés.
       </footer>
     </section>
   );
